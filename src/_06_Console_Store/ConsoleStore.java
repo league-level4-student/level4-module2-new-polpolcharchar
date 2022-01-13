@@ -1,5 +1,7 @@
 package _06_Console_Store;
 
+import java.util.Scanner;
+
 public class ConsoleStore {
 
     /*
@@ -38,6 +40,12 @@ public class ConsoleStore {
 
     public static void main(String[] args) {
 
+    	Scanner s = new Scanner(System.in);
+    	
+    	System.out.println("You have $30");
+    	System.out.println("What do you want to do? (Buy 'item', ViewItems, CheckOut, Remove 'item'");
+    	
+    	
     }
 
 }
