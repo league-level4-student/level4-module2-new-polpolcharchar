@@ -2,6 +2,13 @@ package _06_Console_Store;
 
 import java.util.Scanner;
 
+import _02_Generics_Store.Candy;
+import _02_Generics_Store.Cart;
+import _02_Generics_Store.Cereal;
+import _02_Generics_Store.Clothing;
+import _02_Generics_Store.Toy;
+import _02_Generics_Store.shoppingItem;
+
 public class ConsoleStore {
 
     /*
@@ -40,10 +47,61 @@ public class ConsoleStore {
 
     public static void main(String[] args) {
 
-    	Scanner s = new Scanner(System.in);
     	
-    	System.out.println("You have $30");
-    	System.out.println("What do you want to do? (Buy 'item', ViewItems, CheckOut, Remove 'item'");
+    	Scanner s = new Scanner(System.in);
+    	int response;
+    	int balance = 30;
+    	
+    	Cart<shoppingItem> c = new Cart<shoppingItem>();
+    	
+    	
+		System.out.println("You have $" + balance);
+    	do {
+	    	do {
+	    		System.out.println("What do you want to do? (Buy(0), Remove(1), ViewItems(2), CheckOut(3)");
+	    		response = s.nextInt();
+	    	}while(response < 0 || response > 3);
+	    	
+	    	if(response == 0) {
+	    		int item;
+	    		do {
+	    			System.out.println("Buy: candy $1 (0), cereal $5 (1), clothing $10 (2), toy $5 (3)");
+	    			item = s.nextInt();
+	    		}while(item < 0 || item > 3);
+	    		
+	    		c.add(item == 0 ? new Candy() : item == 1 ? new Cereal() : item == 2 ? new Clothing() : new Toy());
+	    		
+	    	}else if(response == 1) {
+	    		if(c.length() != 0) {
+		    		int item;
+		    		c.print();
+		    		do {
+		    			System.out.println("Remove item #: ");
+		    			item = s.nextInt();
+		    		}while(item < 0 || item > c.length() - 1);
+		    		
+		    		c.remove(item);
+		    		c.print();
+	    		}else {
+	    			System.out.println("Nothing to remove!");
+	    		}
+	    	}else if(response == 2) {
+	    		c.print();
+	    	}else {
+	    		if(c.totalCost() <= balance) {
+	    			System.out.println("Recipt: ");
+	    			c.print();
+	    			System.out.println("Total Cost: " + c.totalCost());
+	    			balance -= c.totalCost();
+	    			c = new Cart<shoppingItem>();
+	    			System.out.println();
+	        		System.out.println("You have $" + balance);
+	    		}else {
+	    			System.out.println("You don't have enough money!");
+	        		System.out.println("You have $" + balance);
+	    		}
+	    	}
+    	}while(balance > 0);
     	
     	
     }

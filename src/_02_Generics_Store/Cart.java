@@ -12,11 +12,11 @@ import javax.swing.JPanel;
  */
 
 @SuppressWarnings("unchecked")
-public class Cart<T extends NonFood> {
+public class Cart<T extends shoppingItem> {
     private T[] cart;
 
     public Cart() {
-        cart = (T[]) new NonFood[5];
+        cart = (T[]) new shoppingItem[5];
     }
 
     // Adds an item to the cart
@@ -27,8 +27,46 @@ public class Cart<T extends NonFood> {
                 return;
             }
         }
-        JOptionPane.showMessageDialog(null,
-                "Your cart is full!\nNo more than 5 items");
+        System.out.println("You can't have more than 5 items in your cart!");
+    }
+    
+    // Removes an item from the cart
+    public void remove(int index) {
+    	T[] newCart = (T[]) new shoppingItem[5];
+    	int currentPlacement = 0;
+    	for(int i = 0; i < cart.length; i++) {
+    		if(i != index) {
+    			newCart[currentPlacement] = cart[i];
+    			currentPlacement++;
+    		}
+    	}
+    	cart = newCart;
+    }
+    
+    // Prints the content of the cart
+    public void print() {
+    	String output = "";
+    	for(T item : cart) {
+    		if(item != null) {
+    			output += (item.toString()) + "($" + item.price + ")\n";
+    		}
+    	}
+    	if(output.length() > 2) {
+    		output = output.substring(0, output.length() - 1);
+    	}
+    	System.out.println("Cost: " + totalCost());
+    	System.out.println(output);
+    }
+    
+    //returns the total cost of all items
+    public int totalCost() {
+    	int result = 0;
+    	for(T item : cart) {
+    		if(item != null) {
+    			result += item.price;
+    		}
+    	}
+    	return result;
     }
 
     // Displays everything currently in the cart
@@ -41,7 +79,7 @@ public class Cart<T extends NonFood> {
 
         for (int i = 0; i < cart.length; i++) {
             if (cart[i] != null) {
-                panel.add(cart[i].getNonFood());
+                panel.add(cart[i].getItem());
             }
         }
         frame.pack();

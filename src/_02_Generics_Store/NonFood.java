@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 public abstract class NonFood {
 	String item;
 	
-	public abstract JLabel getNonFood();
+	public abstract JLabel getItem();
 		
 	@SuppressWarnings("rawtypes")
 	public static ImageIcon loadImage(String fileName) {
